@@ -1,0 +1,18 @@
+
+{% extends 'base.html'%}
+
+{% block content %}<br><br>
+    <div class = main_info>
+        {% for obj in object_list %}
+            <a href="{{obj.id}}">
+                <div class="transbox">
+                    <h1>{{obj}}</h1>
+                </div>
+            </a>
+            
+        {% endfor %}
+    </div>
+
+{% endblock content %}
+
+
