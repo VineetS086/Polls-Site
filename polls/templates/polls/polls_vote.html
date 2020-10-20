@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %} <br>
+    <form action="." method="POST"> {% csrf_token %}
+
+        <h1>{{question}}</h1>
+            {% for choice in object_list %}
+            <input type="radio" 
+            id={{choice.choice_text}} 
+            name="vote_given" 
+            value={{choice.choice_text}}
+            required>
+            
+              <label for={{choice.choice_text}}>{{choice.choice_text}}</label><br>
+            
+                <br>
+            {% endfor %}
+            
+            <input type="submit" value="Vote">
+    </form>
+
+{% endblock content %}
+

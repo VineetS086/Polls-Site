@@ -2,18 +2,21 @@
 {% extends 'base.html'%}
 
 {% block content %} 
-<br><br>
-    <h1>{{object}} - {{object.votes}} Votes</h1>
+<br>
+    <h1>{{object}} - {{object.votes}} Vote(s)</h1><br>
     <ul>
         {% for choice in object.choice_set.all %}
             <li>
                 <h3>
-                    {{choice.choice_text}} - {{choice.votes}} Votes
+                    {{choice.choice_text}} - 
+                    {% widthratio choice.votes object.votes 100 %}% 
+                    ({{choice.votes}})
                 </h3>
             </li>
         {% endfor %}
     </ul>
 
+    <a href="vote/">
+        <input type="button" value="Vote">
+    </a>
 {% endblock content %}
-
-

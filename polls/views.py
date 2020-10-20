@@ -6,7 +6,7 @@ from django.views.generic import(
     DetailView,
 )
 
-from .models import Question
+from .models import Question, Choice
 '''
 def list_view(request):
     queary_set = Question.objects.all()
@@ -47,3 +47,14 @@ class blog_view(DetailView):
         title_ = self.kwargs.get('blog_title')
         return get_object_or_404(Blog, title=title_)
 """
+
+def Vote(request, id, *args, **kwargs):
+    question_ = Question.objects.get(id=id)
+    queryset = Choice.objects.filter(question = question_)
+    context = {
+        'question'    : question_,
+        'object_list' : queryset,
+    }
+
+    return render(request, 'polls/polls_vote.html', context)
+
