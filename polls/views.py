@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse
 
 from django.views.generic import(
@@ -49,12 +49,23 @@ class blog_view(DetailView):
 """
 
 def Vote(request, id, *args, **kwargs):
-    question_ = Question.objects.get(id=id)
-    queryset = Choice.objects.filter(question = question_)
+    question_ = get_object_or_404(Question, id=id)
+    queryset = get_list_or_404(Choice, question = question_)
     context = {
         'question'    : question_,
         'object_list' : queryset,
     }
+    vote = request.POST.get('vote_given')
+    if request.method == 'POST' and vote is not None :
 
+        choice_voted  = Choice.objects.get(choice_text=vote, question = question_)
+
+        #vote saving
+        question_.votes+=1
+        choice_voted.votes+=1
+
+        question_.save()
+        choice_voted.save()
+        
     return render(request, 'polls/polls_vote.html', context)
 
