@@ -40,14 +40,14 @@ def Vote(request, id, *args, **kwargs):
         'object_list' : queryset,
     }
     status_ = has_voted(question_, request)
-    print(status_)
+    #print(status_)
     if status_[0]==True:
         return HttpResponse(f'<h1>You Have already Voted Your Choice Was: {status_[1]}')
 
 
     vote = request.POST.get('vote_given')
     if request.method == 'POST' and vote is not None :
-        choice_voted  = get_object_or_404(Choice, choice_text=vote, question = question_)
+        choice_voted  = get_object_or_404(Choice, id=vote, question = question_)
 
         #vote saving
         question_.votes+=1
