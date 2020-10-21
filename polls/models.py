@@ -21,4 +21,11 @@ class Choice(models.Model):
         return f'{self.choice_text} - {self.question}' 
     
 
-    
+class Voters(models.Model):
+    question  = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice    = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    ip_adress = models.CharField(max_length=100)
+    vote_time = models.DateTimeField('Voted AT', default=datetime.now())
+
+    def __str__(self):
+        return f'{self.ip_adress} - {self.choice}'
